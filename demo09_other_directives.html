@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+    <style>
+        .myRed {
+            color: red
+        }
+
+        .myYellow {
+            color: yellow
+        }
+
+        .mySize {
+            font-size: 80px
+        }
+    </style>
+</head>
+
+<body>
+    <div id='example'>
+
+        <img v-bind:src="'img/'+imgUrl" style="width:800px;height:300px" alt="">
+
+        <button @click="modifyColor">modifyColor</button>
+        <h1 v-bind:style="{backgroundColor:myBG}">我是标题，当点击按钮时背景色会变</h1>
+        <h1 v-bind:style="{backgroundColor:myBG,color:myColor}">我是标题，当点击按钮时背景色会变</h1>
+        <p v-bind:class="{myRed:isRed}" @click="modifyIsRed">背景色是红色的吗</p>
+        <h3 v-bind:class="{mySize:isCustom,myYellow:isCustom}" @click="modifyCustomClass">变变变！</h3>
+
+        <button v-bind:disabled="isDisable">disable</button>
+
+        <button v-show="hasMore">加载更多</button>
+        <p v-show="!hasMore">没有更多数据可以加载了</p>
+
+
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#example',
+            data: {
+                myBG: '#ff0000',
+                myColor: '#00ff00',
+                imgUrl: 'P1.jpg',
+                isRed: true,
+                isCustom: true,
+                isDisable: true,
+                hasMore: true
+            },
+            methods: {
+                modifyCustomClass: function () {
+                    this.isCustom = !this.isCustom;
+                },
+                modifyIsRed: function () {
+                    this.isRed = !this.isRed;
+                },
+                getRandomColor: function () {
+                    var r = Math.floor(Math.random() * 256);
+                    var g = Math.floor(Math.random() * 256);
+                    var b = Math.floor(Math.random() * 256);
+                    var R = r.toString(16);
+                    var G = g.toString(16);
+                    var B = b.toString(16);
+                    return '#' + R + G + B;
+
+                },
+                modifyColor: function () {
+                    this.myBG = this.getRandomColor();
+                    this.myColor = this.getRandomColor();
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

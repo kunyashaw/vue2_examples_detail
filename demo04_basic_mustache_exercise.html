@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <div id='example'>
+        <h1>{{3>2?'大于':'小于等于'}}</h1>
+        <h2>{{"汽车价格为"+car.price}}</h2>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#example',
+            data: {
+                message: 'Hello 123 VueJS',
+                car: {
+                    brand: 'BMW',
+                    price: 20
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

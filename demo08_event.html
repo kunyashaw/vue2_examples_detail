@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <div id='example'>
+        <!-- 发现了吗？我们没有修改DOM，但是当count自增时，视图在更新
+        ，我们之前接触的原生js或者jQuery在使用时，都是DOM驱动的，而Vue
+        是数据驱动的，现在很多框架都是数据驱动的，开发者可以专心负责修改
+        数据，而无需去管视图是如何更新的，因为框架帮助我们搞定了
+        -->
+
+        <button v-on:click="handleClick">clickMe</button>
+        <!-- @eventName是v-on:eventName的简写形式 -->
+        <button @click="handleClick">clickMe</button>
+        <h2>{{count}}</h2>
+
+        <select @change="funcSelect">
+        <option value="r">Red</option>
+        <option value="g">Green</option>
+        <option value="b">Blue</option>
+    </select>
+        <!--提交事件触发时的修饰符：.prevent-->
+        <form @submit.prevent="funcSubmit">
+            是否同意<input type="checkbox" />
+            <button>提交</button>
+        </form>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#example',
+            data: {
+                count: 0
+            },
+            methods: {
+                handleClick: function () {
+                    this.count++;
+                },
+                funcSelect: function (event) {
+                    console.log(event.target.value);
+                },
+                funcSubmit: function () {
+                    console.log('submit event is triggered');
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

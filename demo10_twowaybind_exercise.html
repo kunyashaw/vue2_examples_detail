@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <div id='example'>
+        <h1>猜数字游戏</h1>
+        <input type="text" v-model.number="userInputValue" />
+        <p>{{result}}</p>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#example',
+            data: {
+                randomValue: 1,
+                userInputValue: '',
+                result: '请输入数字开始猜测'
+            },
+            created: function () {
+                this.randomValue = Math.floor(Math.random() * 100);
+                console.log(this.randomValue);
+            },
+            watch: {
+                userInputValue: function () {
+                    if (this.userInputValue > this.randomValue) {
+                        this.result = "大了"
+                    }
+                    else if (this.userInputValue < this.randomValue) {
+                        this.result = "小了"
+                    }
+                    else {
+                        this.result = "厉害了！！！正确结果就是" + this.randomValue;
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

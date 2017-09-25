@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <div id='example'>
+        <ul>
+            <li v-for="item in list">
+                {{item}}
+            </li>
+        </ul>
+        <ol>
+            <!-- 注意，是value在前，key在后 -->
+            <li v-for="(value,key) in list">
+                {{"key is "+key+" value is "+value}}
+            </li>
+        </ol>
+        <ul>
+            <!-- 这种写法主要是用在对象中 -->
+            <li v-for="(value,key,index) in car">
+                {{"index is "+index+" value is "+value+" key is "+key}}
+            </li>
+        </ul>
+
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#example',
+            data: {
+                list: [10, 20, 30, 40, 50],
+                car: {
+                    brand: 'Volovo',
+                    price: 30
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

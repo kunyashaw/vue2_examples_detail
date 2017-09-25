@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <div id='example'>
+        <h1 v-if="!isReady">数据正在准备中</h1>
+        <p v-if="isReady">我是数据</p>
+
+        <h1>正确答案是</h1>
+        <p v-if="answer == 'a'">A</p>
+        <p v-else-if="answer == 'b'">B</p>
+        <p v-else-if="answer == 'c'">C</p>
+        <p v-else>D</p>
+
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#example',
+            data: {
+                isReady: true,
+                answer: 'd'
+            }
+        })
+    </script>
+</body>
+
+</html>

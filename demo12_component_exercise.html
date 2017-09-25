@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <div id='example'>
+        <my-login></my-login>
+    </div>
+    <script>
+        // 创建组件注意事项，当一个组件需要返回多个标签时，必须放在一个容器中
+
+        Vue.component('my-login', {
+            template: `<form>
+            <my-input-user></my-input-user>
+            <my-input-pwd></my-input-pwd>
+            </form>`
+        })
+
+        Vue.component('my-input-user', {
+            template: `<div>
+                <label>用户名</label>
+                <input type='text' placeholder="请输入用户名"/>
+            </div>
+            `
+        })
+
+        Vue.component('my-input-pwd', {
+            template: `<div>
+                <label>密码</label>
+                <input type='text' placeholder="请输入密码"/>
+            </div>
+            `
+        })
+
+        var app = new Vue({
+            el: '#example',
+            data: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

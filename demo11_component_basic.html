@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <div id='example'>
+        <!-- 像使用html标签一样去使用自定义组件 -->
+        <my-component></my-component>
+    </div>
+    <script>
+        // 创建组件，①组件的命名要遵循烤串式命名，②返回多个标签时要放在一个容器中
+        Vue.component('my-component', {
+            template: '<h1>it is a custom component</h1>'
+        })
+
+        var app = new Vue({
+            el: '#example',
+            data: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

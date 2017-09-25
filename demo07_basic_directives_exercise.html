@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <div id='example'>
+
+        <li v-if="pageNo !=1 ">
+            <a>上一页</a>
+        </li>
+        <li v-for="index of pageCountNums ">
+            <a>{{index}}</a>
+        </li>
+        <li v-if="pageNo !=pageCountNums.length ">
+            <a>下一页</a>
+        </li>
+        </ul>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#example',
+            data: {
+                pageCountNums: [1, 2, 3, 4, 5],
+                pageNo: 5
+            }
+        })
+    </script>
+</body>
+
+</html>

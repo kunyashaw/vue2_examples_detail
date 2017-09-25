@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <style>
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul>li {
+            display: inline-block;
+            line-height: 50px;
+            width: 10%;
+            text-align: center;
+        }
+
+        .myColor {
+            color: blue;
+        }
+    </style>
+    <title></title>
+</head>
+
+<body>
+    <div id='example'>
+        <ul>
+            <li v-bind:disabled="pageNo !=1 " @click="prev">
+                <a>上一页</a>
+            </li>
+            <li v-bind:class="{myColor:pageNo == index}" v-for="index of pageCountNums ">
+                <a @click="modifyPageNo(index)">{{index}}</a>
+            </li>
+            <li v-bind:disabled="pageNo !=pageCountNums.length " @click="next">
+                <a>下一页</a>
+            </li>
+        </ul>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#example',
+            data: {
+                pageCountNums: [1, 2, 3, 4, 5],
+                pageNo: 1,
+                myBG: '#0000ff'
+            },
+            methods: {
+                next: function () {
+                    var now = this.pageNo;
+                    now++;
+                    if (now > this.pageCountNums.length) {
+                        return;
+                    }
+                    this.pageNo = now;
+
+                },
+                prev: function () {
+                    count = this.pageNo;
+                    count--;
+                    if (count <= 0) {
+                        return;
+                    }
+                    this.pageNo = count;
+
+                },
+                modifyPageNo: function (index) {
+                    this.pageNo = index
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

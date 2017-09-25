@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <div id='example'>
+        <input type="text" v-model="myNum" />
+        <h1>{{"input msg is "+myNum}}</h1>
+        <!-- v-model是有修饰器的，
+            .lazy - 取代 input 监听 change 事件
+            .number - 输入字符串转为数字 
+            .trim - 输入首尾空格过滤 -->
+
+        <!-- 当input一输入值，视图就有了变化。有时候你不想这么高度同步
+            可以加上lazy -->
+        <input type="text" v-model.lazy="myAddress" placeholder="请输入送餐地址" />
+        <h1>{{myAddress}}</h1>
+
+        <!-- 是很常用的功能，可以强制转换数字，因为即使你写上type="number"，原生的html返回的还是一个string。 -->
+        <input type="text" v-model.number="num1" placeholder="请输入加数" />
+        <input type="text" v-model.number="num2" placeholder="请输入加数" />
+        <button @click="addSum">求和</button>
+
+        <!-- .trim - 输入首尾空格过滤 -->
+        <input type="text" v-model.trim="myNotes" placeholder="请输入备注信息">
+        <span>{{'当前输入的长度为'+myNotes.length}}</span>
+
+        <!-- 监控用户的输入信息并进行数据对应的处理，比如发起搜索 ;在Vue的实例中添加watch属性，指定一个对象，
+            在对象中写上要监听的模型数据的名称，同时指定它变化时对应的处理函数-->
+        <input type="text" v-model="myKw" placeholder="请输入关键词进行搜索">
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#example',
+            data: {
+                myNum: 'default content',
+                myAddress: '',
+                num1: 0,
+                num2: 0,
+                myNotes: '',
+                myKw: ''
+            },
+            methods: {
+                addSum: function () {
+                    console.log(this.num1 + this.num2);
+                }
+            },
+            watch: {
+                myKw: function () {
+                    console.log(this.myKw);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
