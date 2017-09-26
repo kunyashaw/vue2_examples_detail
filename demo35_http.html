@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <script src="js/vue-resource.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <div id="example">
+        <list></list>
+    </div>
+
+    <script id="listTpl" type="text/x-template">
+
+        <div>
+            <button @click="getData">获取数据</button>
+            <ul>
+                <li v-for="tmp in userList">
+                    {{"name is "+tmp.name+ "age is "+tmp.age}}
+                </li>
+            </ul>
+        </div>
+
+    </script>
+
+
+    <script>
+        Vue.component('list', {
+            template: '#listTpl',
+            data: function () {
+                return {
+                    userList: []
+                }
+            },
+            methods: {
+                getData: function () {
+                    //获取数据
+                    this.$http
+                        .get('https://jsonplaceholder.typicode.com/posts')
+                        .then(function (response) {
+                            console.log(response.data);
+                            this.userList = response.data;
+                        })
+                }
+            }
+        })
+
+
+        new Vue({
+            el: '#example',
+            data: {
+                msg: 'hello'
+            }
+        })
+    </script>
+
+</body>
+
+</html>

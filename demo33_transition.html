@@ -5,23 +5,61 @@
     <meta charset="UTF-8">
     <script src="js/vue.js"></script>
     <title></title>
+    <style>
+        .fade-enter-active,
+        .fade-leave-active {
+            transition: opacity .5s
+        }
+
+        .fade-enter,
+        .fade-leave-to
+        /* .fade-leave-active in below version 2.1.8 */
+
+        {
+            opacity: 0
+        }
+    </style>
 </head>
 
 <body>
+    <!--  
+    在下列情形中，
+    可以给任何元素和组件添加 entering/leaving 过渡 
+        条件渲染(使用 v-if)
+        条件展示 (使用 v-show)
+        动态组件 
+        组件根节点
+    -->
     <div id='example'>
-        <!-- 像使用html标签一样去使用自定义组件 -->
         <my-component></my-component>
     </div>
     <script>
-        // 创建组件，①组件的命名要遵循烤串式命名，②返回多个标签时要放在一个容器中
         Vue.component('my-component', {
-            template: '<h1>it is a custom component</h1>'
+            data: function () {
+                return {
+                    show: false,
+                    count: 0
+                }
+            },
+            template: `
+            <div>
+                <h1>{{count}}</h1>
+                <button v-on:click="show = !show">Toggle</button>
+                <transition name="fade">
+                    <p v-show="show">hello</p>
+                </transition>
+            </div>
+            `,
+            mounted: function () {
+                setInterval(() => { this.count++; }, 500);
+
+            }
         })
 
         var app = new Vue({
             el: '#example',
             data: {
-
+                componentShow: false
             }
         })
     </script>
