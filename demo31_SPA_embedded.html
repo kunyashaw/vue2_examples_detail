@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <script src="js/vue-router.js"></script>
+    <title></title>
+</head>
+<!-- 
+     ①在mail指定routerView 
+     ②在配置路由地址 
+     直接在要插入代码片段的容器对应的组件中配置 
+     { 
+        path:'/myMail', component:Mail,
+        children:[ 
+            {path:'/myInbox',component:**}，
+            {path:'/myOutbox',component:**}, 
+            {path:'',component:**} 
+        ] 
+    }
+ -->
+
+<body>
+    <div id="example">
+        <router-view></router-view>
+    </div>
+
+    <script id="mailTpl" type="text/x-template">
+        <div>
+            <h1>这是邮箱主页面</h1>
+            <!-- 指定一个容器，
+      希望能够加载收件箱/发件箱-->
+            <router-view></router-view>
+        </div>
+    </script>
+
+    <script>
+        var Login = Vue.component('login', {
+            template: '<a href="#/myMail">登录</a>'
+        })
+
+        var Mail = Vue.component('mail', {
+            template: '#mailTpl'
+        })
+
+        var Inbox = Vue.component('inbox', {
+            template: `
+      <ul>
+        <li>收件箱1</li>
+        <li>收件箱2</li>
+        <li>收件箱3</li>
+        <li>收件箱4</li>
+      </ul>
+    `
+        })
+
+        var Outbox = Vue.component('outbox', {
+            template: `
+        <ul>
+        <li>已发件1</li>
+        <li>已发件2</li>
+        <li>已发件3</li>
+        <li>已发件4</li>
+        </ul>
+      `
+        })
+
+
+        //创建一个对象数组
+        const myRoutes = [
+            { path: '/myLogin', component: Login },
+            {
+                path: '/myMail',
+                component: Mail,
+                children: [
+                    { path: '/myInbox', component: Inbox },
+                    { path: '/myOutbox', component: Outbox },
+                    { path: '', component: Inbox }
+                ]
+            },
+            { path: '', component: Login }
+        ]
+
+        //将对象数组和VueRouter关联
+        const myRouter = new VueRouter({
+            routes: myRoutes
+        })
+
+        new Vue({
+            router: myRouter,
+            el: '#example',
+            data: {
+                msg: 'hello'
+            }
+        })
+    </script>
+
+</body>
+
+</html>

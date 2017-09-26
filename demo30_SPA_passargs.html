@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <script src="js/vue-router.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <!--  
+        ① 明确发送方和接收方 
+        ② 配置接收方的地址 
+        ③ 准备接收参数 
+        ④ 发送参数 
+        
+        ①明确发送方 接收方 
+        ②配置接收方的路由地址 {path:'/myMain'} -> {path:'/myMain/:id'}
+        ③接收参数 this.$route.params.id
+        ④发送参数 this.$router.push('/myMain/10')
+     -->
+    <div id="example">
+
+        <!-- 指定一个容器 盛放组件-->
+        <router-view></router-view>
+
+    </div>
+
+    <script>
+        var KflStart = Vue.component('start', {
+            template: '<button @click="jump">跳转到下一页</button>',
+            methods: {
+                jump: function () {
+                    //在点击按钮时，能够发送参数给Main
+                    this.$router.push('/myMain/10');
+                }
+            }
+
+        });
+
+        var KflMain = Vue.component('testmain', {
+            template: '<h1>this is main {{msg}}</h1>',
+            data: function () {
+                return {
+                    msg: ''
+                }
+            },
+            created: function () {
+                //接收参数
+                console.log(this.$route.params);
+                this.msg = this.$route.params.id;
+            }
+        })
+
+        //①创建一个对象数组
+        const myRoutes = [
+            { path: '/myStart', component: KflStart },
+            { path: '/myMain/:id', component: KflMain },
+            { path: '', component: KflStart }
+        ]
+        //②让路由配置生效
+        const myRouter = new VueRouter({
+            routes: myRoutes
+        })
+
+        new Vue({
+            router: myRouter,
+            el: '#example',
+            data: {
+                msg: 'hello'
+            }
+        })
+    </script>
+
+</body>
+
+</html>

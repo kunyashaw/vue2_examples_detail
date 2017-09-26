@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <script src="js/vue-router.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <!-- 
+   SPA的工作原理： http://****.com/index.html#/myRoute
+   ①解析完整的html页面 index.html
+   ②解析路由地址 myRoute 
+   ③读取该路由地址所对应的配置对象 
+   ④发起ajax请求，获取组件或页面
+   ⑤插入到盛放代码片段的容器
+     -->
+
+    <!--
+         基本使用步骤： 
+        ①引入对应的vue-router.js
+        ②指定盛放组件的容器<router-view></router-view>
+        ③创建需要用到的组件 
+        ④配置路由词典 
+        4.1 创建一个路由配置 
+        const myRoutes = [
+         {path:'/myLogin',component:TestLogin} 
+         {path:'/myMain',component:TestMain}
+        ]
+        4.2 创建一个路由器对象 
+        const myRouter =
+         new VueRouter({ routes:myRoutes })
+        4.3 在当前的Vue的实例去调用myRouter 
+        new Vue({ router:myRouter})
+      -->
+    <!-- 
+    ①修改地址栏中路由地址 
+    localhost:63342/day2/demo07_vueRouterBasic.html#/kflLogin
+    localhost:63342/day2/demo07_vueRouterBasic.html#/kflRegister
+    ②js
+     methods:{
+          jump:function(){
+               this.$router.push('/kflRegister') 
+            } 
+        } 
+    ③a
+    通过路由插件的指令
+    <router-link to="/kflRegister">
+        再去注册
+    </router-link>
+
+    <a href="#/kflRegister"></a>
+       -->
+    <div id="example">
+
+        <!-- 指定盛放组件的容器-->
+        <router-view></router-view>
+
+    </div>
+
+    <script id="myLogin" type="text/x-template">
+        <div>
+            <h1>这是登录页面</h1>
+            <button @click="jump">没有账号去注册</button>
+            <a href="#/kflRegister">去注册</a>
+
+            <!-- 通过路由插件的指令-->
+            <router-link to="/kflRegister">
+                再去注册
+            </router-link>
+
+        </div>
+    </script>
+
+    <script id="myRegister" type="text/x-template">
+        <div>
+            <h1>这是注册页面</h1>
+        </div>
+    </script>
+
+
+    <script>
+        var MyLogin = Vue.component('login', {
+            template: '#myLogin',
+            methods: {
+                jump: function () {
+                    //借助于路由模块 实现组件间的跳转
+                    this.$router
+                        .push('/kflRegister');
+                }
+            }
+        })
+
+        var MyRegister = Vue.component('register', {
+            template: '#myRegister'
+        })
+
+        //配置路由词典
+        const myRoutes = [
+            {
+                path: '/kflLogin',
+                component: MyLogin
+            },
+            {
+                path: '/kflRegister',
+                component: MyRegister
+            },
+            {
+                path: '',
+                component: MyLogin
+            }
+        ];
+
+        const myRouter = new VueRouter({
+            routes: myRoutes
+        })
+
+
+        new Vue({
+            router: myRouter,
+            el: '#example',
+            data: {
+                msg: 'hello'
+            }
+        })
+    </script>
+
+</body>
+
+</html>

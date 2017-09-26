@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <script src="js/vue-router.js"></script>
+    <title></title>
+</head>
+<!-- 练习：
+     要求大家通过VueRouter来创建一个SPA，
+     这个SPA现在有两个组件，一个list，一个detail，
+     点击list组件中的任何一个列表项，能够跳转到detail，
+     并且把列表项的id传递给detail；
+     detail接收到参数显示在组件中。 
+-->
+
+<body>
+    <div id="example">
+        <router-view></router-view>
+    </div>
+
+    <script id="listTpl" type="text/x-template">
+        <ul>
+            <li v-for="(tmp,index) in dishList">
+                <router-link :to="'/myDetail/'+index">
+                    {{tmp}}
+                </router-link>
+            </li>
+        </ul>
+    </script>
+
+    <script id="detailTpl" type="text/x-template">
+        <h1>这是详情页{{msg}}</h1>
+    </script>
+
+    <script>
+        var MyList = Vue.component('list', {
+            template: '#listTpl',
+            data: function () {
+                return {
+                    dishList: [100, 200, 300, 400]
+                }
+            },
+            methods: {
+                jump: function (myIndex) {
+                    this.$router
+                        .push('/myDetail/' + myIndex)
+                }
+            }
+        })
+
+        var MyDetail = Vue.component('detail', {
+            template: '#detailTpl',
+            data: function () {
+                return {
+                    msg: ''
+                }
+            },
+            created: function () {
+                //接收参数
+                this.msg =
+                    this.$route.params.index;
+            }
+        })
+
+        //配置路由词典
+        const myRoutes = [
+            { path: '/myList', component: MyList },
+            { path: '/myDetail/:index', component: MyDetail },
+            { path: '', component: MyList }
+        ]
+
+        const myRouter = new VueRouter({
+            routes: myRoutes
+        })
+
+        new Vue({
+            router: myRouter,
+            el: '#example',
+            data: {
+                msg: 'hello'
+            }
+        })
+    </script>
+
+</body>
+
+</html>
