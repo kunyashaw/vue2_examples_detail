@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <!-- 练习：实现一个自定义过滤器，名字叫做myTextTransform,
+        如果参数是true就转换为大写，否则转换为小写 -->
+    <div id='example'>
+        <h1>{{name | myTextTransform}}</h1>
+        <h1>{{name | myTextTransform(true)}}</h1>
+        <h1>{{name | myTextTransform(false)}}</h1>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#example',
+            data: {
+                name: 'Michael'
+            },
+            filters: {
+                myTextTransform: function (inputValue, isUpper) {
+                    if (isUpper) {
+                        return inputValue.toUpperCase()
+                    }
+                    else {
+                        return inputValue.toLowerCase()
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

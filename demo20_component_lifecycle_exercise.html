@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <div id='example'>
+        <my-component></my-component>
+    </div>
+    <script>
+        // 创建组件注意事项，当一个组件需要返回多个标签时，必须放在一个容器中
+        // 练习：创建一个组件，组件渲染一个h1标签,
+        // 要求：当挂载完毕之后启动一个定时器，用来修改h1标签的透明度值
+        Vue.component('my-component', {
+            template: `<div>
+                <h1 v-bind:style="{opacity:myOpacity}">hello component</h1>
+            </div>`,
+            methods: {
+
+            },
+            data: function () {
+                return { myOpacity: 0 }
+            },
+            mounted: function () {
+                console.log('挂载done');
+                setInterval(() => {
+                    this.myOpacity += 0.1;
+                    if (this.myOpacity > 1) {
+                        this.myOpacity = 0;
+                    }
+                    console.log(this.myOpacity);
+                }, 500);
+            },
+            beforeUpdate: function () {
+                console.log('before update');
+            }
+        })
+
+
+        var app = new Vue({
+            el: '#example',
+            data: {
+                isShow: true
+            },
+            methods: {
+                handleClick: function () {
+                    this.isShow = !this.isShow;
+                }
+            },
+        })
+        // app.$mount('#example')
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <!-- 
+         练习：有两个组件， 
+一个父组件：father (由一个button，一个子组件son；定义一个count的变量初始化为0，
+每一次点击按钮，count自增一次；将count传递给son组件去显示在son组件的h1标签) 
+一个子组件：son (一个h1的标签)
+
+     -->
+
+    <div id="container">
+        <father></father>
+    </div>
+
+    <script>
+        Vue.component('father', {
+            methods: {
+                modifyCount: function () {
+                    console.log('modifyCount func is called');
+                    this.count++;
+                }
+            },
+            data: function () {
+                return {
+                    count: 0
+                }
+            },
+            template: `
+      <div>
+        <son :myCount="count"></son>
+        <button @click="modifyCount">
+          clickMe
+        </button>
+      </div>
+    `
+        })
+
+        Vue.component('son', {
+            props: ['myCount'],
+            template: '<h1>{{myCount}}</h1>'
+        })
+
+        new Vue({
+            el: '#container',
+            data: {
+                msg: 'Hello Vue'
+            }
+        })
+    </script>
+</body>
+
+</html>

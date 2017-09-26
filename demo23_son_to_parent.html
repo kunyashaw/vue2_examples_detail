@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <!-- 
+    子-》父 （events up ） 基本步骤： 
+    ①在父组件中 调用 子组件时候
+    绑定自定义事件处理函数 Vue.component('parent',
+    { methods:{ recvMsg:function(msg){ //msg就是传递来的数据} },
+    template:`<son @customEvent="recvMsg"></son>` })
+    ②在子组件内部 触发绑定给子组件的事件 this.$emit('customEvent',20);
+ -->
+    <div id="container">
+        <!-- 将parent组件设置为当前应用的根组件-->
+        <parent></parent>
+    </div>
+
+    <script>
+        Vue.component('parent', {
+            methods: {
+                recvMsg: function (msg) {
+                    console.log('在父组件中定义的子组件事件处理函数被调用了');
+                    console.log(msg);
+                    this.msgFromSon = msg;
+                }
+            },
+            data: function () {
+                return {
+                    msgFromSon: ''
+                }
+            },
+            template: `
+                <div>
+                    <h1>This is Parent</h1>
+                    <p>{{msgFromSon}}</p>
+                    <hr/>
+                    <son @customEvent="recvMsg"></son>
+                </div>
+                `
+        })
+
+        Vue.component('son', {
+            methods: {
+                toFather: function () {
+                    //触发指定的自定义事件并完成值的传递
+                    this.$emit('customEvent', 200);
+                }
+            },
+            template: `
+                <div>
+                    <h1>This is Son Component</h1>
+                    <button @click="toFather">
+                        sendToFather
+                    </button>
+                </div>
+            `
+        })
+
+
+        new Vue({
+            el: '#container',
+            data: {
+                msg: 'Hello Vue'
+            }
+        })
+    </script>
+</body>
+
+</html>

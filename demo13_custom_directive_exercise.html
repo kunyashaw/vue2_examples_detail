@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <!-- 实现一个自定义指令，当该指令被调用时，
+        可以根据传入的参数将当前元素的背景色设置为指定的值 -->
+    <div id='example'>
+        <p v-change-background-color="myBg">{{message}}</p>
+        <p v-change-background-color="'#00ff00'">{{message}}</p>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#example',
+            data: {
+                message: 'Hello 123 VueJS',
+                myBg: '#ff0000'
+            },
+            directives: {
+                changeBackgroundColor: {
+                    bind: function (el, bindings) {
+                        console.log('bind', arguments);
+                        el.style.backgroundColor = bindings.value;
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

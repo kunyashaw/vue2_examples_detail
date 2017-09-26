@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <div id='example'>
+        <table>
+            <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 只要18岁及以下的小姑娘 -->
+                <tr v-for="tmp in stuList" v-if="tmp.age <= 18 && tmp.sex == 0">
+                    <td v-for="value in tmp">{{value}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#example',
+            data: {
+                stuList: [
+                    { name: 'michael', sex: 1, age: 20 },
+                    { name: 'lucy', sex: 0, age: 18 },
+                    { name: 'lily', sex: 0, age: 17 },
+                    { name: 'hanmeimei', sex: 0, age: 18 },
+                    { name: 'wentworth', sex: 1, age: 23 },
+                ]
+            }
+        })
+    </script>
+</body>
+
+</html>

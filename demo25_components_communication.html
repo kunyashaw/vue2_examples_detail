@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <!-- 
+    子-》父
+    通过ref给子组件指定引用的名称，就可以通过this.$refs找到子组件的实例，从而进行操作。 
+    步骤1：<son ref='mySon'></son>
+    步骤2：this.$refs.mySon拿到对象进行操作 
+    
+    父-》子
+    在子组件中 可以通过this.$parent得到父组件的实例，从而进行操作
+ -->
+
+    <div id="container">
+        <parent></parent>
+    </div>
+
+    <script>
+        Vue.component('parent', {
+            data: function () {
+                return {
+                    fatherName: '小头爸爸'
+                }
+            },
+            methods: {
+                getSonInfo: function () {
+                    //如何通过ref找到子组件的实例？
+                    alert(
+                        this.$refs.mySon.sonName);
+                }
+            },
+            template: `
+    <div>
+      <h1>This is parent</h1>
+      <button @click="getSonInfo">
+        获取子组件信息
+      </button>
+      <hr/>
+      <son ref="mySon"></son>
+    </div>
+    `
+        });
+
+        Vue.component('son', {
+            data: function () {
+                return {
+                    sonName: '大头儿子'
+                }
+            },
+            methods: {
+                getFatherInfo: function () {
+                    //在子组件中 获取 父组件中的数据
+                    // this.$parent 就是父组件被调用实例后的对象
+                    alert(this.$parent.fatherName);
+                }
+            },
+            template: `
+      <div>
+       <h1>This is son component</h1>
+       <button @click="getFatherInfo">获取父组件数据</button>
+      </div>
+    `
+        })
+
+
+        new Vue({
+            el: '#container',
+            data: {
+                msg: 'Hello Vue'
+            }
+        })
+    </script>
+</body>
+
+</html>

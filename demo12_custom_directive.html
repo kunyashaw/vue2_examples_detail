@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <div id='example'>
+        <button @click="modifyCount">clickMe</button>
+        <p v-if="count<5" v-change="count">{{message}}</p>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#example',
+            data: {
+                message: 'Hello 123 VueJS',
+                count: 0
+            },
+            methods: {
+                modifyCount: function () {
+                    this.count++;
+
+                }
+            },
+            directives: {
+                change: {
+                    bind: function () {
+                        console.log('bind', arguments);
+                    },
+                    update: function (el, bindings) {
+                        console.log('update', arguments);
+                        el.innerHTML = bindings.value;
+                    },
+                    unbind: function () {
+                        console.log('unbind', arguments);
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

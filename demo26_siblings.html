@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+
+    <div id="container">
+        <xiong-da></xiong-da>
+        <xiong-er></xiong-er>
+    </div>
+
+    <script>
+        var bus = new Vue();
+
+        Vue.component('xiong-da', {
+            methods: {
+                sendToXiongEr: function () {
+                    //触发熊二所绑定的事件并传值
+                    bus.$emit('toXiongEr', '皮皮虾 我们走');
+                }
+            },
+            template: `
+      <div>
+        <h1>这是熊大</h1>
+        <button @click="sendToXiongEr">
+          发消息给熊二
+        </button>
+      </div>
+    `
+        })
+
+        Vue.component('xiong-er', {
+            data: function () {
+                return {
+                    myResult: ''
+                }
+            },
+            template: `
+      <div>
+        <h1>这是熊二</h1>
+        <p>接收到的数据为{{myResult}}</p>
+      </div>
+    `,
+            mounted: function () {
+                //在熊二中绑定一个自定义事件 的处理函数
+                bus.$on('toXiongEr', function (data) {
+                    console.log("接收到的数据为" + data);
+                    this.myResult = data;
+                }.bind(this));
+            }
+        })
+
+
+        new Vue({
+            el: '#container',
+            data: {
+                msg: 'Hello Vue'
+            }
+        })
+    </script>
+</body>
+
+</html>

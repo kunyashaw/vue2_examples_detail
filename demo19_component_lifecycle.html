@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <div id='example'>
+        <button @click="handleClick">clickeMe</button>
+        <my-component v-if="isShow"></my-component>
+    </div>
+    <script>
+        // 创建组件注意事项，当一个组件需要返回多个标签时，必须放在一个容器中
+
+        Vue.component('my-component', {
+            template: `<div>
+                <button @click="modifyCount">add</button>
+                <h1>hello component{{count}}</h1>
+            </div>`,
+            methods: {
+                modifyCount: function () {
+                    this.count++;
+                }
+            },
+            data: function () {
+                return { count: 0 }
+            },
+            beforeCreate: function () {
+                console.log('准备创建');
+            },
+            created: function () {
+                console.log('创建done');
+            },
+            beforeMount: function () {
+                console.log('准备挂载');
+            },
+            mounted: function () {
+                console.log('挂载done');
+            },
+            beforeUpdate: function () {
+                console.log('before update');
+            },
+            updated: function () {
+                console.log('updated');
+            },
+            beforeDestroy: function () {
+                console.log('before destroy');
+            },
+            destroyed: function () {
+                console.log(' destroyed');
+            }
+        })
+
+
+        var app = new Vue({
+            el: '#example',
+            data: {
+                isShow: true
+            },
+            methods: {
+                handleClick: function () {
+                    this.isShow = !this.isShow;
+                }
+            },
+        })
+        // app.$mount('#example')
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <!-- 
+    1、父-》子 props down 
+    父组件在调用子组件时候，传值方式？
+     步骤1：在父组件调用子组件时 指定属性<child sonName="zhangsan"></child>
+     步骤2：在子组件中接收指定属性对应的值
+      Vue.component('child',{ props:['sonName'], template:'<h1>{{sonName}}</h1>' })
+     -->
+    <!-- 
+        父组件调用子组件时传值： <child btnName="注册"></child>
+        子组件接受： Vue.component('child', { props: ['btnName']}),
+     -->
+
+    <div id="container">
+        <!-- 调用组件-->
+        <parent></parent>
+    </div>
+
+    <script>
+        Vue.component('parent', {
+            data: function () {
+                return {
+                    loginName: '登录',
+                    registerName: '注册'
+                }
+            },
+            template: `
+                <div>
+                <child :btnName="loginName"></child>
+                <child btnName="注册"></child>
+                </div>
+            `
+        })
+
+        Vue.component('child', {
+            props: ['btnName'],
+            template: '<button>{{btnName}}</button>'
+        })
+
+        new Vue({
+            el: '#container',
+            data: {
+                msg: 'Hello Vue'
+            }
+        })
+    </script>
+</body>
+
+</html>

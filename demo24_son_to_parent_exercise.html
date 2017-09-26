@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <!-- 
+创建组件： 组件：MainComponent 
+由HeaderComponent和一个h1的标签构成的：欢迎登录/用户你好。
+组件：HeaderComponent，一个h1标签：这是页头 
+要求： 
+①在渲染MainComponent组件，根据HeaderComponent中数据isLogin,决定MainComponent中h1标签要显示的内容
+②在HeaderComponent挂载完之后，触发事件 mounted
+
+
+ -->
+    <div id="container">
+        <!-- 将Main作为根组件去调用-->
+        <main-component></main-component>
+    </div>
+
+    <script>
+        Vue.component('main-component', {
+            data: function () {
+                return {
+                    isUserLogin: false
+                }
+            },
+            methods: {
+                //子组件事件被触发要调用的方法
+                recvMsg: function (msg) {
+                    console.log('父组件收到子组件的数据了' + msg);
+                    this.isUserLogin = msg;
+                }
+            },
+            template: `
+            <div>
+                <header-component @checkLoginEvent="recvMsg">
+                </header-component>
+                <h1>{{isUserLogin?'用户你好':'欢迎登录'}}</h1>
+            </div>
+            `
+        })
+
+        Vue.component('header-component', {
+            data: function () {
+                return {
+                    isLogin: false
+                }
+            },
+            template: `
+            <h1>这是页头</h1>
+            `,
+            mounted: function () {
+                //触发checkLoginEvent的事件
+                this.$emit('checkLoginEvent', this.isLogin);
+            }
+        })
+
+
+        new Vue({
+            el: '#container',
+            data: {
+                msg: 'Hello Vue'
+            }
+        })
+    </script>
+</body>
+
+</html>

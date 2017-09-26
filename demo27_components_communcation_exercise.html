@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <!-- props down,events up -->
+    <div id="container">
+        <chatroom-component></chatroom-component>
+    </div>
+
+    <script>
+        Vue.component('chatroom-component', {
+            data: function () {
+                return {
+                    msgList: []
+                }
+            },
+            methods: {
+                addToList: function (msg) {
+                    //该方法是子组件自定义事件触发要执行的回调
+                    console.log('聊天室收到了新消息:' + msg);
+                    this.msgList.push(msg);
+                }
+            },
+            template: `
+                <div>
+                <ul>
+                    <li v-for="tmp in msgList">
+                    {{tmp}}
+                    </li>
+                </ul>
+                <user-component 
+                @addList="addToList" uName="lucy"></user-component>
+                
+                <user-component
+                @addList="addToList" uName="michael">
+                </user-component>
+                
+                </div>
+                `
+        })
+
+        Vue.component('user-component', {
+            data: function () {
+                return {
+                    myMsg: ''
+                }
+            },
+            props: ['uName'],
+            methods: {
+                sendToFather: function () {
+                    //能够触发自定义事件
+                    this.$emit(
+                        'addList',
+                        this.uName + ":" + this.myMsg
+                    );
+                    this.myMsg = '';
+                }
+            },
+            template: `
+                <div>
+                <label>{{uName}}</label>
+                <input  v-model="myMsg" type="text"/>
+                <button @click="sendToFather">发送</button>
+                </div>
+                `
+        })
+
+
+        new Vue({
+            el: '#container',
+            data: {
+                msg: 'Hello Vue'
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <div id='example'>
+        <h1>{{price | currency}}</h1>
+        <h1>{{1 | sexChange(true)}}</h1>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#example',
+            data: {
+                price: 300
+            },
+            filters: {
+                currency: function (input) {
+                    return '$' + input
+                },
+                sexChange: function (input, arg1) {
+                    var result = '';
+                    if (input == 1) {
+                        if (arg1) {
+                            result = '男'
+                        }
+                        else {
+                            result = 'male'
+                        }
+                    }
+                    else {
+                        if (arg1) {
+                            result = '女';
+                        }
+                        else {
+                            result = 'female'
+                        }
+                    }
+                    return result;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

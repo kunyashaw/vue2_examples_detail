@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <!-- props down,通过$parent操作父组件数据 -->
+
+    <div id="container">
+        <chatroom-component></chatroom-component>
+    </div>
+
+    <script>
+        Vue.component('chatroom-component', {
+            data: function () {
+                return {
+                    msgList: []
+                }
+            },
+            methods: {
+
+            },
+            template: `
+    <div>
+      <ul>
+        <li v-for="tmp in msgList">
+          {{tmp}}
+        </li>
+      </ul>
+      <user-component  uName="lucy"></user-component>
+      <user-component  uName="michael">
+      </user-component>
+    </div>
+    `
+        })
+
+        Vue.component('user-component', {
+            data: function () {
+                return {
+                    myMsg: ''
+                }
+            },
+            props: ['uName'],
+            methods: {
+                sendToFather: function () {
+                    this.$parent.msgList.push(this.uName + ":" + this.myMsg);
+                }
+            },
+            template: `
+    <div>
+      <label>{{uName}}</label>
+      <input  v-model="myMsg" type="text"/>
+      <button @click="sendToFather">发送</button>
+    </div>
+    `
+        })
+
+
+        new Vue({
+            el: '#container',
+            data: {
+                msg: 'Hello Vue'
+            }
+        })
+    </script>
+</body>
+
+</html>

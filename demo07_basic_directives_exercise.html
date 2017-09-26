@@ -9,26 +9,26 @@
 
 <body>
     <div id='example'>
-
-        <li v-if="pageNo !=1 ">
-            <a>上一页</a>
-        </li>
-        <li v-for="index of pageCountNums ">
-            <a>{{index}}</a>
-        </li>
-        <li v-if="pageNo !=pageCountNums.length ">
-            <a>下一页</a>
-        </li>
+        <h1 v-if="!isDataReady">正在加载数据...</h1>
+        <ul>
+            <li v-for="tmp in list">
+                {{tmp}}
+            </li>
         </ul>
     </div>
     <script>
         var app = new Vue({
             el: '#example',
             data: {
-                pageCountNums: [1, 2, 3, 4, 5],
-                pageNo: 5
+                list: [],
+                isDataReady: false
             }
         })
+        setTimeout(() => {
+            console.log(app);
+            app.isDataReady = true;
+            app.list = [100, 200, 300];
+        }, 1000);
     </script>
 </body>
 
